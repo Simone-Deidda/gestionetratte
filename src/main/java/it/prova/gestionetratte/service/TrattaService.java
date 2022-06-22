@@ -10,6 +10,6 @@ public interface TrattaService {
 
 	public Tratta findByCodice(String codiceTratta);
 
-	public void inserisciNuovo(Tratta tratta);
+	public Tratta inserisciNuovo(Tratta tratta);
 
 }

@@ -38,7 +38,7 @@ public class GestionetratteApplication implements CommandLineRunner {
 		String codiceTratta = "ROMMIL010122";
 		Tratta romaMilano = trattaService.findByCodice(codiceTratta);
 		if (romaMilano == null) {
-			romaMilano = new Tratta(codiceAirbus, "tratta che parte da Roma e arriva a Milano",
+			romaMilano = new Tratta(codiceTratta, "tratta che parte da Roma e arriva a Milano",
 					LocalDate.of(2020, 9, 18), LocalTime.of(12, 25), LocalTime.of(13, 17), StatoTratta.ATTIVA);
 			romaMilano.setAirbus(airbus);
 			trattaService.inserisciNuovo(romaMilano);

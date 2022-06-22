@@ -29,7 +29,7 @@ public class AirbusServiceImpl implements AirbusService {
 
 	@Override
 	@Transactional
-	public void inserisciNuovo(Airbus airbus) {
-		airbusRepository.save(airbus);
+	public Airbus inserisciNuovo(Airbus airbus) {
+		return airbusRepository.save(airbus);
 	}
 }

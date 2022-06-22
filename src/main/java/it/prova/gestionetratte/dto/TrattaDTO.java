@@ -137,4 +137,12 @@ public class TrattaDTO {
 		}).collect(Collectors.toList());
 	}
 
+	public Tratta buildTrattaModel() {
+		Tratta result = new Tratta(this.id, this.codice, this.descrizione, this.data, this.oraAtterraggio, this.oraDecollo, this.stato);
+		if (this.airbusDTO != null) {
+			result.setAirbus(this.airbusDTO.buildAirbusModel());
+		}
+		return result;
+	}
+
 }

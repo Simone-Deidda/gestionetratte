@@ -10,6 +10,6 @@ public interface AirbusService {
 
 	public Airbus findByCodice(String codiceAirbus);
 
-	public void inserisciNuovo(Airbus airbus);
+	public Airbus inserisciNuovo(Airbus airbus);
 
 }

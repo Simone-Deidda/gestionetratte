@@ -29,7 +29,7 @@ public class TrattaServiceImpl implements TrattaService {
 
 	@Override
 	@Transactional
-	public void inserisciNuovo(Tratta tratta) {
-		trattaRepository.save(tratta);
+	public Tratta inserisciNuovo(Tratta tratta) {
+		return trattaRepository.save(tratta);
 	}
 }
