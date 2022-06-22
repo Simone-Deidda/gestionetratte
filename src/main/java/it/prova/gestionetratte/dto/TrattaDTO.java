@@ -2,6 +2,9 @@ package it.prova.gestionetratte.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -10,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import it.prova.gestionetratte.model.StatoTratta;
+import it.prova.gestionetratte.model.Tratta;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TrattaDTO {
@@ -31,6 +35,20 @@ public class TrattaDTO {
 	@JsonIgnoreProperties(value = { "tratte" })
 	@NotNull(message = "{airbus.notnull}")
 	private AirbusDTO airbusDTO;
+
+	public TrattaDTO() {
+	}
+
+	public TrattaDTO(Long id, String codice, String descrizione, LocalDate data, LocalTime oraAtterraggio,
+			LocalTime oraDecollo, StatoTratta stato) {
+		this.id = id;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.data = data;
+		this.oraAtterraggio = oraAtterraggio;
+		this.oraDecollo = oraDecollo;
+		this.stato = stato;
+	}
 
 	public Long getId() {
 		return id;
@@ -94,6 +112,29 @@ public class TrattaDTO {
 
 	public void setAirbusDTO(AirbusDTO airbusDTO) {
 		this.airbusDTO = airbusDTO;
+	}
+
+	public static Set<TrattaDTO> createTrattaDTOSetFromModelSet(Set<Tratta> tratte, boolean includeAirbus) {
+		return tratte.stream().map(entity -> {
+			return TrattaDTO.buildTrattaDTOFromModel(entity, includeAirbus);
+		}).collect(Collectors.toSet());
+	}
+
+	public static TrattaDTO buildTrattaDTOFromModel(Tratta trattaModel, boolean includeAirbus) {
+		TrattaDTO result = new TrattaDTO(trattaModel.getId(), trattaModel.getCodice(), trattaModel.getDescrizione(),
+				trattaModel.getData(), trattaModel.getOraAtterraggio(), trattaModel.getOraDecollo(),
+				trattaModel.getStato());
+
+		if (includeAirbus)
+			result.setAirbusDTO(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false));
+
+		return result;
+	}
+
+	public static List<TrattaDTO> createTrattaDTOSetFromModelList(List<Tratta> list, boolean includeAirbus) {
+		return list.stream().map(entity -> {
+			return TrattaDTO.buildTrattaDTOFromModel(entity, includeAirbus);
+		}).collect(Collectors.toList());
 	}
 
 }

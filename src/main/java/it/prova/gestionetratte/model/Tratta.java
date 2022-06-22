@@ -4,13 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "tratta")
 public class Tratta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +36,19 @@ public class Tratta {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "airbus_id", nullable = false)
 	private Airbus airbus;
+
+	public Tratta() {
+	}
+
+	public Tratta(String codice, String descrizione, LocalDate data, LocalTime oraAtterraggio, LocalTime oraDecollo,
+			StatoTratta stato) {
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.data = data;
+		this.oraAtterraggio = oraAtterraggio;
+		this.oraDecollo = oraDecollo;
+		this.stato = stato;
+	}
 
 	public Long getId() {
 		return id;
