@@ -15,4 +15,7 @@ public interface TrattaRepository extends CrudRepository<Tratta, Long> {
 
 	Optional<Tratta> findByCodice(String codiceTratta);
 
+	@Query("select t from Tratta t left join fetch t.airbus where t.id = ?1")
+	Optional<Tratta> findByIdEager(long id);
+
 }

@@ -12,4 +12,6 @@ public interface AirbusService {
 
 	public Airbus inserisciNuovo(Airbus airbus);
 
+	public Airbus caricaSingoloElementoEager(long id);
+
 }

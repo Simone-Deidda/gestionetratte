@@ -12,4 +12,6 @@ public interface TrattaService {
 
 	public Tratta inserisciNuovo(Tratta tratta);
 
+	public Tratta caricaSingoloElementoEager(long id);
+
 }

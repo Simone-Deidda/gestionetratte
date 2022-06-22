@@ -34,7 +34,7 @@ public class TrattaDTO {
 
 	@JsonIgnoreProperties(value = { "tratte" })
 	@NotNull(message = "{airbus.notnull}")
-	private AirbusDTO airbusDTO;
+	private AirbusDTO airbus;
 
 	public TrattaDTO() {
 	}
@@ -107,11 +107,11 @@ public class TrattaDTO {
 	}
 
 	public AirbusDTO getAirbusDTO() {
-		return airbusDTO;
+		return airbus;
 	}
 
 	public void setAirbusDTO(AirbusDTO airbusDTO) {
-		this.airbusDTO = airbusDTO;
+		this.airbus = airbusDTO;
 	}
 
 	public static Set<TrattaDTO> createTrattaDTOSetFromModelSet(Set<Tratta> tratte, boolean includeAirbus) {
@@ -126,7 +126,7 @@ public class TrattaDTO {
 				trattaModel.getStato());
 
 		if (includeAirbus)
-			result.setAirbusDTO(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false));
+			result.setAirbusDTO(AirbusDTO.airbus(trattaModel.getAirbus(), false));
 
 		return result;
 	}
@@ -139,8 +139,8 @@ public class TrattaDTO {
 
 	public Tratta buildTrattaModel() {
 		Tratta result = new Tratta(this.id, this.codice, this.descrizione, this.data, this.oraAtterraggio, this.oraDecollo, this.stato);
-		if (this.airbusDTO != null) {
-			result.setAirbus(this.airbusDTO.buildAirbusModel());
+		if (this.airbus != null) {
+			result.setAirbus(this.airbus.buildAirbusModel());
 		}
 		return result;
 	}

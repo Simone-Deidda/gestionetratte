@@ -15,4 +15,7 @@ public interface AirbusRepository extends CrudRepository<Airbus, Long> {
 
 	Optional<Airbus> findByCodice(String codice);
 
+	@Query("select a from Airbus a left join fetch a.tratte where a.id = ?1")
+	Optional<Airbus> findByIdEager(long id);
+
 }

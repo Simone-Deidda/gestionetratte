@@ -32,4 +32,10 @@ public class TrattaServiceImpl implements TrattaService {
 	public Tratta inserisciNuovo(Tratta tratta) {
 		return trattaRepository.save(tratta);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Tratta caricaSingoloElementoEager(long id) {
+		return trattaRepository.findByIdEager(id).orElse(null);
+	}
 }

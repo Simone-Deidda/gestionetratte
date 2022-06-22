@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.prova.gestionetratte.dto.TrattaDTO;
 import it.prova.gestionetratte.exception.IdNotNullForInsertException;
+import it.prova.gestionetratte.exception.TrattaNotFoundException;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.service.TrattaService;
 
@@ -37,5 +39,15 @@ public class TrattaController {
 		
 		Tratta trattaInserita = trattaService.inserisciNuovo(input.buildTrattaModel());
 		return TrattaDTO.buildTrattaDTOFromModel(trattaInserita, true);
+	}
+	
+	@GetMapping("/{id}")
+	public TrattaDTO findById(@PathVariable(value = "id", required = true) long id) {
+		Tratta tratta = trattaService.caricaSingoloElementoEager(id);
+
+		if (tratta == null)
+			throw new TrattaNotFoundException("Tratta not found con id: " + id);
+
+		return TrattaDTO.buildTrattaDTOFromModel(tratta, true);
 	}
 }
