@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.prova.gestionetratte.dto.AirbusDTO;
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.repository.AirbusRepository;
 
@@ -37,5 +36,17 @@ public class AirbusServiceImpl implements AirbusService {
 	@Transactional(readOnly = true)
 	public Airbus caricaSingoloElementoEager(long id) {
 		return airbusRepository.findByIdEager(id).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Airbus caricaSingoloElemento(Long id) {
+		return airbusRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Airbus aggiorna(Airbus input) {
+		return airbusRepository.save(input);
 	}
 }

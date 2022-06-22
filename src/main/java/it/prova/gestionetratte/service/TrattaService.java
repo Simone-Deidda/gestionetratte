@@ -14,4 +14,8 @@ public interface TrattaService {
 
 	public Tratta caricaSingoloElementoEager(long id);
 
+	public Tratta caricaSingoloElemento(Long id);
+
+	public Tratta aggiorna(Tratta buildTrattaModel);
+
 }

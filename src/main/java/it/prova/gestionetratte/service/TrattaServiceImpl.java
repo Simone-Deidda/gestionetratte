@@ -38,4 +38,16 @@ public class TrattaServiceImpl implements TrattaService {
 	public Tratta caricaSingoloElementoEager(long id) {
 		return trattaRepository.findByIdEager(id).orElse(null);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Tratta caricaSingoloElemento(Long id) {
+		return trattaRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Tratta aggiorna(Tratta input) {
+		return trattaRepository.save(input);
+	}
 }

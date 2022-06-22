@@ -94,14 +94,14 @@ public class AirbusDTO {
 
 	public static List<AirbusDTO> createAirbusDTOListFromModelList(List<Airbus> list, boolean includeTratte) {
 		return list.stream().map(entity -> {
-			AirbusDTO result = AirbusDTO.airbus(entity, includeTratte);
+			AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(entity, includeTratte);
 			if (includeTratte)
 				result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(entity.getTratte(), false));
 			return result;
 		}).collect(Collectors.toList());
 	}
 
-	public static AirbusDTO airbus(Airbus registaModel, boolean includeTratte) {
+	public static AirbusDTO buildAirbusDTOFromModel(Airbus registaModel, boolean includeTratte) {
 		AirbusDTO result = new AirbusDTO(registaModel.getId(), registaModel.getCodice(), registaModel.getDescrizione(),
 				registaModel.getDataInizioServizio(), registaModel.getNumeroPasseggeri());
 		if (includeTratte)
@@ -112,5 +112,7 @@ public class AirbusDTO {
 	public Airbus buildAirbusModel() {
 		return new Airbus(this.id, this.codice, this.descrizione, this.dataInizioServizio, this.numeroPasseggeri);
 	}
+
+	
 
 }

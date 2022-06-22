@@ -14,4 +14,8 @@ public interface AirbusService {
 
 	public Airbus caricaSingoloElementoEager(long id);
 
+	public Airbus caricaSingoloElemento(Long id);
+
+	public Airbus aggiorna(Airbus buildAirbusModel);
+
 }
