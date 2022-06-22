@@ -15,9 +15,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class AirbusDTO {
 
 	private Long id;
-	@NotBlank(message = "{codice.notblank}")
+	@NotBlank(message = "{airbus.codice.notblank}")
 	private String codice;
-	@NotBlank(message = "{descrizione.notblank}")
+	@NotBlank(message = "{airbus.descrizione.notblank}")
 	private String descrizione;
 	@NotNull(message = "{datainizioservizio.notnull}")
 	private LocalDate dataInizioServizio;

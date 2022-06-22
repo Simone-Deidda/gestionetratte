@@ -15,9 +15,9 @@ import it.prova.gestionetratte.model.StatoTratta;
 public class TrattaDTO {
 
 	private Long id;
-	@NotBlank(message = "{codice.notblank}")
+	@NotBlank(message = "{tratta.codice.notblank}")
 	private String codice;
-	@NotBlank(message = "{descrizione.notblank}")
+	@NotBlank(message = "{tratta.descrizione.notblank}")
 	private String descrizione;
 	@NotNull(message = "{data.notnull}")
 	private LocalDate data;
