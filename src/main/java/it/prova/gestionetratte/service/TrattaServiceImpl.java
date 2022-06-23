@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.prova.gestionetratte.exception.TrattaNonAnnullataException;
 import it.prova.gestionetratte.model.StatoTratta;
 import it.prova.gestionetratte.model.Tratta;
-import it.prova.gestionetratte.repository.TrattaRepository;
+import it.prova.gestionetratte.repository.tratta.TrattaRepository;
 
 @Service
 public class TrattaServiceImpl implements TrattaService {
@@ -60,5 +60,11 @@ public class TrattaServiceImpl implements TrattaService {
 			throw new TrattaNonAnnullataException("Impossibile eliminare la Tratta con id " + tratta.getId() + " perché è ancora attiva.");
 		}
 		trattaRepository.delete(tratta);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Tratta> findByExample(Tratta example) {
+		return trattaRepository.findByExample(example);
 	}
 }

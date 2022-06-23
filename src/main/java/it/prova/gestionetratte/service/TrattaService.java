@@ -20,4 +20,6 @@ public interface TrattaService {
 
 	public void rimuovi(Tratta tratta);
 
+	public List<Tratta> findByExample(Tratta buildTrattaModel);
+
 }

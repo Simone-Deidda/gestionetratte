@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.exception.AirbusAssegnatoATrattaException;
 import it.prova.gestionetratte.model.Airbus;
-import it.prova.gestionetratte.repository.AirbusRepository;
+import it.prova.gestionetratte.repository.airbus.AirbusRepository;
 
 @Service
 public class AirbusServiceImpl implements AirbusService {
@@ -55,9 +55,16 @@ public class AirbusServiceImpl implements AirbusService {
 	@Transactional
 	public void rimuovi(Airbus airbus) {
 		if (airbus.getTratte() != null && !airbus.getTratte().isEmpty()) {
-			throw new AirbusAssegnatoATrattaException("Impossibile eliminare l'Airbus con id " + airbus.getId() + " perché è assegnato ad almeno una Tratta.");
+			throw new AirbusAssegnatoATrattaException("Impossibile eliminare l'Airbus con id " + airbus.getId()
+					+ " perché è assegnato ad almeno una Tratta.");
 		}
-		
+
 		airbusRepository.delete(airbus);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Airbus> findByExample(Airbus example) {
+		return airbusRepository.findByExample(example);
 	}
 }

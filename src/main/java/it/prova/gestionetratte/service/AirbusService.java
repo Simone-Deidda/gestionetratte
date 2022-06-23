@@ -20,4 +20,6 @@ public interface AirbusService {
 
 	public void rimuovi(Airbus airbus);
 
+	public List<Airbus> findByExample(Airbus example);
+
 }
