@@ -83,7 +83,6 @@ public class AirbusServiceImpl implements AirbusService {
 		for (Tratta tratta : listAll) {
 			List<Airbus> tmp = airbusRepository.findAllByCoincidenze(tratta.getOraDecollo(),
 					tratta.getOraAtterraggio());
-			System.out.println(tmp.size());
 			result.addAll(AirbusDTO.createAirbusDTOListFromModelList(tmp, true, true));
 		}
 
