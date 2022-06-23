@@ -1,5 +1,6 @@
 package it.prova.gestionetratte.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -66,5 +67,16 @@ public class TrattaServiceImpl implements TrattaService {
 	@Transactional(readOnly = true)
 	public List<Tratta> findByExample(Tratta example) {
 		return trattaRepository.findByExample(example);
+	}
+
+	@Override
+	@Transactional
+	public void concludiTratte() {
+		List<Tratta> listaTratteAttive = trattaRepository.findAllByStatoAndDataBefore(StatoTratta.ATTIVA, LocalDate.now());
+		for (Tratta tratta : listaTratteAttive) {
+			tratta.setStato(StatoTratta.CONCLUSA);
+			trattaRepository.save(tratta);
+		}
+		
 	}
 }

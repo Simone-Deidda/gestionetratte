@@ -22,4 +22,6 @@ public interface TrattaService {
 
 	public List<Tratta> findByExample(Tratta buildTrattaModel);
 
+	public void concludiTratte();
+
 }
