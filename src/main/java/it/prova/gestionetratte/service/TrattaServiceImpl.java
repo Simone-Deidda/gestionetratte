@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionetratte.exception.TrattaNonAnnullataException;
+import it.prova.gestionetratte.model.StatoTratta;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.TrattaRepository;
 
@@ -49,5 +51,14 @@ public class TrattaServiceImpl implements TrattaService {
 	@Transactional
 	public Tratta aggiorna(Tratta input) {
 		return trattaRepository.save(input);
+	}
+
+	@Override
+	@Transactional
+	public void rimuovi(Tratta tratta) {
+		if (tratta.getStato() != StatoTratta.ANNULLATA) {
+			throw new TrattaNonAnnullataException("Impossibile eliminare la Tratta con id " + tratta.getId() + " perché è ancora attiva.");
+		}
+		trattaRepository.delete(tratta);
 	}
 }

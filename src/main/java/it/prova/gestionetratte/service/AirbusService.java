@@ -18,4 +18,6 @@ public interface AirbusService {
 
 	public Airbus aggiorna(Airbus buildAirbusModel);
 
+	public void rimuovi(Airbus airbus);
+
 }

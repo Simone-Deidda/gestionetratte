@@ -49,7 +49,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(AirbusNotFoundException.class)
-	public ResponseEntity<Object> handleFilmNotFoundException(AirbusNotFoundException ex, WebRequest request) {
+	public ResponseEntity<Object> handleAirbusNotFoundException(AirbusNotFoundException ex, WebRequest request) {
 
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("timestamp", LocalDateTime.now());
@@ -60,7 +60,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler(TrattaNotFoundException.class)
-	public ResponseEntity<Object> handleRegistaNotFoundException(TrattaNotFoundException ex, WebRequest request) {
+	public ResponseEntity<Object> handleTrattaNotFoundException(TrattaNotFoundException ex, WebRequest request) {
 
 		Map<String, Object> body = new LinkedHashMap<>();
 		body.put("timestamp", LocalDateTime.now());
@@ -68,5 +68,27 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		body.put("status", HttpStatus.NOT_FOUND);
 
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(TrattaNonAnnullataException.class)
+	public ResponseEntity<Object> handleTrattaNonAnnullataException(TrattaNonAnnullataException ex, WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AirbusAssegnatoATrattaException.class)
+	public ResponseEntity<Object> handleAirbusAssegnatoATrattaException(AirbusAssegnatoATrattaException ex, WebRequest request) {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("message", ex.getMessage());
+		body.put("status", HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
 }

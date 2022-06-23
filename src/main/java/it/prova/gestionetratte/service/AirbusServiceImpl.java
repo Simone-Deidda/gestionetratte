@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionetratte.exception.AirbusAssegnatoATrattaException;
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.repository.AirbusRepository;
 
@@ -48,5 +49,15 @@ public class AirbusServiceImpl implements AirbusService {
 	@Transactional
 	public Airbus aggiorna(Airbus input) {
 		return airbusRepository.save(input);
+	}
+
+	@Override
+	@Transactional
+	public void rimuovi(Airbus airbus) {
+		if (airbus.getTratte() != null && !airbus.getTratte().isEmpty()) {
+			throw new AirbusAssegnatoATrattaException("Impossibile eliminare l'Airbus con id " + airbus.getId() + " perché è assegnato ad almeno una Tratta.");
+		}
+		
+		airbusRepository.delete(airbus);
 	}
 }

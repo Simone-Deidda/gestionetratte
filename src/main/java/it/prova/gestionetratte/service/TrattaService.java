@@ -18,4 +18,6 @@ public interface TrattaService {
 
 	public Tratta aggiorna(Tratta buildTrattaModel);
 
+	public void rimuovi(Tratta tratta);
+
 }
