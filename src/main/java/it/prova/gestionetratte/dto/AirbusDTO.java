@@ -1,6 +1,7 @@
 package it.prova.gestionetratte.dto;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class AirbusDTO {
 	@NotNull(message = "{numeropasseggeri.notnull}")
 	@Min(1)
 	private Integer numeroPasseggeri;
+	private Boolean conSovrapposizioni;
 
 	@JsonIgnoreProperties(value = { "airbus" })
 	private Set<TrattaDTO> tratte = new HashSet<TrattaDTO>(0);
@@ -36,12 +38,13 @@ public class AirbusDTO {
 	}
 
 	public AirbusDTO(Long id, String codice, String descrizione, LocalDate dataInizioServizio,
-			Integer numeroPasseggeri) {
+			Integer numeroPasseggeri, Boolean conSovrapposizioni) {
 		this.id = id;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataInizioServizio = dataInizioServizio;
 		this.numeroPasseggeri = numeroPasseggeri;
+		this.conSovrapposizioni = conSovrapposizioni;
 	}
 
 	public Long getId() {
@@ -92,25 +95,42 @@ public class AirbusDTO {
 		this.tratte = tratte;
 	}
 
-	public static List<AirbusDTO> createAirbusDTOListFromModelList(List<Airbus> list, boolean includeTratte) {
+	public Boolean getConSovrapposizioni() {
+		return conSovrapposizioni;
+	}
+
+	public void setConSovrapposizioni(Boolean conSovrapposizioni) {
+		this.conSovrapposizioni = conSovrapposizioni;
+	}
+
+	public static List<AirbusDTO> createAirbusDTOListFromModelList(List<Airbus> list, boolean includeTratte, Boolean coincidenze) {
 		return list.stream().map(entity -> {
-			AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(entity, includeTratte);
+			AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(entity, includeTratte, coincidenze);
 			if (includeTratte)
 				result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(entity.getTratte(), false));
 			return result;
 		}).collect(Collectors.toList());
 	}
 
-	public static AirbusDTO buildAirbusDTOFromModel(Airbus registaModel, boolean includeTratte) {
-		AirbusDTO result = new AirbusDTO(registaModel.getId(), registaModel.getCodice(), registaModel.getDescrizione(),
-				registaModel.getDataInizioServizio(), registaModel.getNumeroPasseggeri());
+	public static AirbusDTO buildAirbusDTOFromModel(Airbus airbusModel, boolean includeTratte, Boolean conSovrapposizioni) {
+		AirbusDTO result = new AirbusDTO(airbusModel.getId(), airbusModel.getCodice(), airbusModel.getDescrizione(),
+				airbusModel.getDataInizioServizio(), airbusModel.getNumeroPasseggeri(), conSovrapposizioni);
 		if (includeTratte)
-			result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(registaModel.getTratte(), false));
+			result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(airbusModel.getTratte(), false));
 		return result;
 	}
 
 	public Airbus buildAirbusModel() {
 		return new Airbus(this.id, this.codice, this.descrizione, this.dataInizioServizio, this.numeroPasseggeri);
+	}
+
+	public static Set<AirbusDTO> createAirbusDTOListFromModelSet(Set<Airbus> list, boolean includeTratte, Boolean coincidenze) {
+		return list.stream().map(entity -> {
+			AirbusDTO result = AirbusDTO.buildAirbusDTOFromModel(entity, includeTratte, coincidenze);
+			if (includeTratte)
+				result.setTratte(TrattaDTO.createTrattaDTOSetFromModelSet(entity.getTratte(), false));
+			return result;
+		}).collect(Collectors.toSet());
 	}
 
 	

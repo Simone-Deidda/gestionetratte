@@ -1,19 +1,25 @@
 package it.prova.gestionetratte.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionetratte.dto.AirbusDTO;
 import it.prova.gestionetratte.exception.AirbusAssegnatoATrattaException;
 import it.prova.gestionetratte.model.Airbus;
+import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.airbus.AirbusRepository;
 
 @Service
 public class AirbusServiceImpl implements AirbusService {
 	@Autowired
 	private AirbusRepository airbusRepository;
+	@Autowired
+	private TrattaService trattaService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -67,4 +73,21 @@ public class AirbusServiceImpl implements AirbusService {
 	public List<Airbus> findByExample(Airbus example) {
 		return airbusRepository.findByExample(example);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Set<AirbusDTO> listAllConSovrapposizioni() {
+		Set<AirbusDTO> result = new HashSet<AirbusDTO>();
+		
+		List<Tratta> listAll = trattaService.listAllElementsEager();
+		for (Tratta tratta : listAll) {
+			List<Airbus> tmp = airbusRepository.findAllByCoincidenze(tratta.getOraDecollo(),
+					tratta.getOraAtterraggio());
+			System.out.println(tmp.size());
+			result.addAll(AirbusDTO.createAirbusDTOListFromModelList(tmp, true, true));
+		}
+
+		return result;
+	}
+
 }

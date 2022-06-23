@@ -126,7 +126,7 @@ public class TrattaDTO {
 				trattaModel.getStato());
 
 		if (includeAirbus)
-			result.setAirbusDTO(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false));
+			result.setAirbusDTO(AirbusDTO.buildAirbusDTOFromModel(trattaModel.getAirbus(), false, null));
 
 		return result;
 	}
